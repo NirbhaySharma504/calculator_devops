@@ -1,0 +1,25 @@
+# Keep the build context small and free of secrets/build output.
+target/
+.git/
+.gitignore
+.gitattributes
+.idea/
+.vscode/
+*.iml
+.DS_Store
+.mvn/
+mvnw
+mvnw.cmd
+
+# Not needed inside the image
+Dockerfile
+.dockerignore
+docker-compose.yml
+Jenkinsfile
+nginx/
+report/
+*.md
+
+# Secrets
+.env
+*.env
