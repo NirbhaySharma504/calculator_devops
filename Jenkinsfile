@@ -25,7 +25,7 @@ pipeline {
     environment {
         // Homebrew Jenkins starts with a minimal PATH and cannot see mvn/docker otherwise.
         PATH        = "/opt/homebrew/bin:/usr/local/bin:${env.PATH}"
-        IMAGE       = 'nirbhaysharma504/calculator-api'
+        IMAGE       = 'hades504/calculator-api'
         TAG         = "${env.BUILD_NUMBER}"
         APP_URL     = 'http://localhost:8081'
     }

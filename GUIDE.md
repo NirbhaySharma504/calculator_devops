@@ -105,7 +105,7 @@ Jenkins runs on **port 8080**. That's why the app is published on **8081** throu
 | Field | Value |
 |---|---|
 | Kind | Username with password |
-| Username | `nirbhaysharma504` |
+| Username | `hades504` |
 | Password | the Docker Hub **access token** from B2 |
 | ID | `dockerhub-creds` (this must match exactly, because the Jenkinsfile uses it) |
 
@@ -327,12 +327,12 @@ sleep. Check that the last webhook delivery is green.
 | Port 8080 already in use | That's Jenkins. The app is only exposed through Nginx on **8081**. Use `docker run -p 9090:8080` for a standalone test. |
 | Webhook delivery shows 404/502/timeout | Is ngrok running? Does the payload URL end in `/github-webhook/`? Is the domain the same as in ngrok? Use the **Redeliver** button after fixing. |
 | Webhook is 200 but no build starts | Run the job once manually (B7.4). Tick "GitHub hook trigger for GITScm polling". The repo URL in the job must match the repo exactly. |
-| `denied: requested access to the resource is denied` on push | The token needs Read & Write. The username must be lowercase `nirbhaysharma504`. The repo `calculator-api` must exist. |
+| `denied: requested access to the resource is denied` on push | The token needs Read & Write. The username must be lowercase `hades504`. The repo `calculator-api` must exist. |
 | Email `535 Authentication failed` | Use a Google **App Password**, not your normal password. Port 465 with SSL, or port 587 with TLS. The System Admin e-mail must be the same Gmail address. |
 | Email says to `null` / no email | Set the `NOTIFY_EMAIL` global environment variable (B6.3). |
 | Deploy health check times out | Run `docker compose logs app`. Usually the image failed to start, or Docker is low on memory. |
 | Nginx 502 right after deploy | The app was still starting. The health loop waits for it. If it persists, run `docker compose restart nginx`. |
-| Image doesn't run on a classmate's / an Intel machine | It was built on Apple Silicon, so it's `arm64`. For a multi-arch image: `docker buildx build --platform linux/amd64,linux/arm64 -t nirbhaysharma504/calculator-api:latest --push .` |
+| Image doesn't run on a classmate's / an Intel machine | It was built on Apple Silicon, so it's `arm64`. For a multi-arch image: `docker buildx build --platform linux/amd64,linux/arm64 -t hades504/calculator-api:latest --push .` |
 | Pipeline stopped working overnight | The Mac slept, so Jenkins and ngrok were paused. Use `caffeinate -d` and restart ngrok. |
 
 ---
