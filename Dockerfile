@@ -19,7 +19,7 @@ FROM eclipse-temurin:21-jre-alpine
 
 LABEL org.opencontainers.image.title="calculator-api" \
       org.opencontainers.image.description="Calculator REST API (Spring Boot) - CSE 816 SPE mini-project" \
-      org.opencontainers.image.source="https://github.com/NirbhaySharma504/calculator-devops"
+      org.opencontainers.image.source="https://github.com/NirbhaySharma504/calculator_devops"
 
 # Run as an unprivileged user instead of root.
 RUN addgroup -S spring && adduser -S -G spring spring
