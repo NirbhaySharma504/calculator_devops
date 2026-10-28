@@ -8,7 +8,7 @@ A `git push` to `main` builds, tests, containerises and redeploys the app with n
 
 | | |
 |---|---|
-| GitHub | https://github.com/NirbhaySharma504/calculator-devops |
+| GitHub | https://github.com/NirbhaySharma504/calculator_devops |
 | Docker Hub | https://hub.docker.com/r/nirbhaysharma504/calculator-api |
 | Stack | Java 21 · Spring Boot 4.1 · Maven · JUnit 5 · Docker · Docker Compose · Nginx · Jenkins |
 

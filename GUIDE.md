@@ -48,14 +48,14 @@ main                     Initial Spring Boot skeleton
 
 ### B1. GitHub repository and the first push
 
-1. On github.com, create a new **public** repo named `calculator-devops`. Leave it empty: no README, no .gitignore.
+1. On github.com, create a new **public** repo named `calculator_devops`. Leave it empty: no README, no .gitignore.
 2. Push `main` and the first feature branch:
 
 ```bash
 cd "/Users/nirbhay/Desktop/Study/Sem 7/SPE/calculator-devops"
 ```
 ```bash
-git remote add origin https://github.com/NirbhaySharma504/calculator-devops.git
+git remote add origin https://github.com/NirbhaySharma504/calculator_devops.git
 ```
 ```bash
 git push -u origin main feature/calculator-api
@@ -153,7 +153,7 @@ brew install ngrok
 1. **New Item** → name `calculator-devops` → **Pipeline** → OK.
 2. **Triggers**: tick **GitHub hook trigger for GITScm polling**.
 3. **Pipeline**: Definition **Pipeline script from SCM** → SCM **Git** →
-   Repository URL `https://github.com/NirbhaySharma504/calculator-devops.git`.
+   Repository URL `https://github.com/NirbhaySharma504/calculator_devops.git`.
    The repo is public, so no credentials are needed. Branch `*/main`, Script Path `Jenkinsfile`.
 4. Save, then click **Build Now** once. The first manual run is what registers the `triggers {}`
    block from the Jenkinsfile. After that, pushes trigger builds by themselves.
