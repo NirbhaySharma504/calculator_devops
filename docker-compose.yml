@@ -5,7 +5,7 @@ name: calculator
 
 services:
   app:
-    image: nirbhaysharma504/calculator-api:${IMAGE_TAG:-latest}
+    image: hades504/calculator-api:${IMAGE_TAG:-latest}
     build: .
     environment:
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-prod}

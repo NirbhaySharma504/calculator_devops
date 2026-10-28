@@ -9,7 +9,7 @@ A `git push` to `main` builds, tests, containerises and redeploys the app with n
 | | |
 |---|---|
 | GitHub | https://github.com/NirbhaySharma504/calculator_devops |
-| Docker Hub | https://hub.docker.com/r/nirbhaysharma504/calculator-api |
+| Docker Hub | https://hub.docker.com/r/hades504/calculator-api |
 | Stack | Java 21 · Spring Boot 4.1 · Maven · JUnit 5 · Docker · Docker Compose · Nginx · Jenkins |
 
 ## Architecture
@@ -75,8 +75,8 @@ Tests:
 ## Run with Docker
 
 ```bash
-docker build -t nirbhaysharma504/calculator-api:latest .
-docker run -d -p 9090:8080 --name calc nirbhaysharma504/calculator-api:latest
+docker build -t hades504/calculator-api:latest .
+docker run -d -p 9090:8080 --name calc hades504/calculator-api:latest
 curl "http://localhost:9090/api/v1/multiply?a=6&b=7"
 ```
 
