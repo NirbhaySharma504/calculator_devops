@@ -20,13 +20,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * real HTTP requests go through the DispatcherServlet, controller, service and
  * exception handler (MockMvc, no network socket needed).
  */
-@SpringBootTest
-@AutoConfigureMockMvc
+@SpringBootTest          // start the whole application context, as in production
+@AutoConfigureMockMvc    // provide a MockMvc instance wired to that context
 class CalculatorControllerIntegrationTest {
 
+    // MockMvc sends simulated HTTP requests and lets us assert on status, headers and JSON.
     @Autowired
     private MockMvc mvc;
 
+    // One test per binary operation, driven by the CSV rows below.
+    // jsonPath("$.result") reads a field from the JSON response body.
     @ParameterizedTest(name = "GET /api/v1/{0}?a={1}&b={2} -> {3}")
     @CsvSource({
             "add,      2,  3,  5",
@@ -55,6 +58,7 @@ class CalculatorControllerIntegrationTest {
                 .andExpect(jsonPath("$.b").doesNotExist());
     }
 
+    // The brief's key error case: checks the status code and every field of the ApiError body.
     @Test
     void divideByZeroReturns400WithErrorBody() throws Exception {
         mvc.perform(get("/api/v1/divide").param("a", "5").param("b", "0"))
@@ -66,6 +70,7 @@ class CalculatorControllerIntegrationTest {
                 .andExpect(jsonPath("$.timestamp").exists());
     }
 
+    // The next tests cover input validation done by Spring before our code runs.
     @Test
     void missingParameterReturns400() throws Exception {
         mvc.perform(get("/api/v1/add").param("a", "2"))
@@ -100,6 +105,7 @@ class CalculatorControllerIntegrationTest {
                 .andExpect(jsonPath("$.message").value("Result is out of range or undefined"));
     }
 
+    // The same endpoint Docker, Compose and Jenkins poll to decide if the app is healthy.
     @Test
     void actuatorHealthIsUp() throws Exception {
         mvc.perform(get("/actuator/health"))

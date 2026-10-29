@@ -2,6 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<!-- Spring Boot parent: supplies tested versions for every Spring/Jackson/JUnit
+	     dependency (so none below need a <version>) and sensible plugin defaults. -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -10,6 +12,7 @@
 	</parent>
 	<groupId>com.spe</groupId>
 	<artifactId>calculator</artifactId>
+	<!-- Shown at /actuator/info (info.app.version in application.properties). Bump it to see a deploy change. -->
 	<version>1.0.0</version>
 	<name>calculator</name>
 	<description>Calculator REST API for SPE mini-project</description>
@@ -17,6 +20,7 @@
 		<java.version>21</java.version>
 	</properties>
 	<dependencies>
+		<!-- /actuator/health and /actuator/info, used by Docker/Compose health checks and Jenkins -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
@@ -25,11 +29,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
+		<!-- Spring MVC + embedded Tomcat + Jackson JSON: the REST API itself -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webmvc</artifactId>
 		</dependency>
 
+		<!-- Test-only dependencies (JUnit 5, MockMvc, AssertJ, Hamcrest); not packaged into the JAR -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator-test</artifactId>
@@ -48,8 +54,12 @@
 	</dependencies>
 
 	<build>
+		<!-- Always produce target/calculator.jar (no version in the name), so the
+		     Dockerfile can copy a fixed path. -->
 		<finalName>calculator</finalName>
 		<plugins>
+			<!-- Repackages the JAR as an executable "fat JAR" with all dependencies inside,
+			     runnable with java -jar. Also provides mvn spring-boot:run. -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
