@@ -11,11 +11,23 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-/** Plain JUnit 5 unit tests: no Spring context, so they run in milliseconds. */
+/**
+ * Plain JUnit 5 unit tests: no Spring context, so they run in milliseconds.
+ *
+ * <p>Structure:
+ * <ul>
+ *   <li>{@code @Nested} groups the tests per operation, so reports read "divide > rejectsDivisionByZero".</li>
+ *   <li>{@code @ParameterizedTest} + {@code @CsvSource} runs one method once per CSV row
+ *       ("a, b, expected"), so many inputs are covered without copy-pasting tests.</li>
+ *   <li>{@code assertThrows} checks that invalid input raises InvalidOperationException.</li>
+ * </ul>
+ */
 class CalculatorServiceTest {
 
+    // Doubles are not exact (0.1 + 0.2 != 0.3), so results are compared within a tolerance.
     private static final double DELTA = 1e-9;
 
+    // Created with "new" - no Spring needed, because the service has no dependencies.
     private final CalculatorService calculator = new CalculatorService();
 
     @Nested
@@ -47,6 +59,7 @@ class CalculatorServiceTest {
             assertEquals(expected, calculator.multiply(a, b), DELTA);
         }
 
+        // Double.MAX_VALUE * 10 overflows to Infinity.
         @Test
         void rejectsOverflow() {
             assertThrows(InvalidOperationException.class, () -> calculator.multiply(Double.MAX_VALUE, 10));
@@ -69,6 +82,7 @@ class CalculatorServiceTest {
             assertEquals("Division by zero is not allowed", ex.getMessage());
         }
 
+        // -0.0 is a distinct double value; make sure it is still treated as zero.
         @Test
         void rejectsDivisionByNegativeZero() {
             assertThrows(InvalidOperationException.class, () -> calculator.divide(5, -0.0));
@@ -129,6 +143,7 @@ class CalculatorServiceTest {
     @Nested
     @DisplayName("input validation")
     class InputValidation {
+        // Each bad value is fed to every operation; all of them must reject it.
         @ParameterizedTest
         @ValueSource(doubles = {Double.NaN, Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY})
         void rejectsNonFiniteInputs(double bad) {
